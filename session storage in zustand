@@ -6,14 +6,8 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 const useStore = create(
   persist(
-    (set) => ({
-      a: null, // Initial value
-      setA: (value) => set({ a: value }), // Set the value of 'a'
-    }),
-    {
-      name: "a-storage", // Name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => sessionStorage), // Use sessionStorage
-    }
+    (set) => ({ a: null, setA: (value) => set({ a: value })}),
+    { name: "a-storage", storage: createJSONStorage(() => sessionStorage)}
   )
 );
 
