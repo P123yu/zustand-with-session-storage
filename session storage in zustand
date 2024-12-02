@@ -1,0 +1,80 @@
+
+
+// zustand file 
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+
+const useStore = create(
+  persist(
+    (set) => ({
+      a: null, // Initial value
+      setA: (value) => set({ a: value }), // Set the value of 'a'
+    }),
+    {
+      name: "a-storage", // Name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => sessionStorage), // Use sessionStorage
+    }
+  )
+);
+
+export default useStore;
+
+
+
+// app.js
+
+import React from "react";
+import A from "./page/A";
+import B from "./page/B";
+function App() {
+  return (
+    <div>
+      <A />
+      <B />
+    </div>
+  );
+}
+
+export default App;
+
+
+
+// A.jsx
+
+import React from 'react';
+import useStore from '../ZustandSession';
+
+
+function A() {
+  const { setA } = useStore();  // Destructure directly from the store
+
+  const handleClick = () => {
+    setA(2);  // Set the value of 'a' to 2
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Save Value</button>
+    </div>
+  );
+}
+
+export default A;
+
+
+// B.jsx
+
+import React from "react";
+import useStore from "../ZustandSession";
+
+function B() {
+  const { a } = useStore(); // Destructure 'a' directly from the store
+
+  return (
+    <div>
+      <h1>Value of a: {a}</h1> {/* Display the value */}
+    </div>
+  );
+}
+
+export default B;
