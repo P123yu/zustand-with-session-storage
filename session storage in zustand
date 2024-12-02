@@ -1,14 +1,13 @@
 
-
+// this file react component can be anything 
 // zustand file 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 const useStore = create(
-  persist(
-    (set) => ({ a: null, setA: (value) => set({ a: value })}),
-    { name: "a-storage", storage: createJSONStorage(() => sessionStorage)}
-  )
+persist((set) => ({ a: null, setA: (value) => set({ a: value })}),
+{ name: "a-storage", storage: createJSONStorage(() => sessionStorage)} 
+)
 );
 
 export default useStore;
